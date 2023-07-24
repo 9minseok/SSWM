@@ -1,1 +1,12 @@
-
+node {
+    
+    stage('Build') {
+        docker.image('gradle:6.9.2-jdk11-alpine').inside{
+            echo 'gradle build ..'
+            sh 'echo $GRADLE_HOME'
+            sh 'gradle --version'
+            sh 'gradle clean bootJar'
+    	}
+	}
+   
+}
