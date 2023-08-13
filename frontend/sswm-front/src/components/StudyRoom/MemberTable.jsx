@@ -10,17 +10,20 @@ import { Navigate, useNavigate } from "react-router";
 const MemberTable = ({ studyroomId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHostModalOpen, setIsHostModalOpen] = useState(false);
+  const [modalStates, setModalStates] = useState({});
 
-  const openModal = (event) => {
+  const openModal = (person) => {
+    setModalStates(person.userDto);
     setIsModalOpen(true);
-    setSelectedUserId(event);
-  };
+  }
+  
   const closeModal = () => setIsModalOpen(false);
 
-  const openHostModal = (event) => {
+  const openHostModal = (person) => {
+    setModalStates(person.userDto);
     setIsHostModalOpen(true);
-    setSelectedUserId(event);
-  };
+  }
+
   const closeHostModal = () => setIsHostModalOpen(false);
 
   // Snackbar
@@ -45,6 +48,7 @@ const MemberTable = ({ studyroomId }) => {
             Authorization: accessToken,
           },
         });
+        console.log("스터디원 목록:::", response.data);
         setStudyPeople(response.data);
       } catch (error) {
         console.error("유저 데이터를 가져오는 데 실패했습니다:", error);
@@ -56,31 +60,48 @@ const MemberTable = ({ studyroomId }) => {
 
   const navigate = useNavigate();
 
+<<<<<<< frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
+  const closeModalEvent = (userDto) => {
+=======
   //유저차단
   const closeModalEvent = (event) => {
+>>>>>>> frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
     setIsModalOpen(false);
+    console.log("userDTO:::", userDto.id);
 
     const setBan = { targetId: selectedUserId }; // 선택한 유저의 ID 사용
 
     axios
+<<<<<<< frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
+      .put(`/api/studyrooms/${studyroomId}/ban`, userDto, {
+=======
       .put(`/api/studyrooms/${studyroomId}/ban`, setBan, {
+>>>>>>> frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
         headers: {
           Authorization: accessToken,
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log("차단 ERROR::",response.data);
         openSnackBar(); // Open the CustomSnackBar after closing the modal
-        Navigate(`/StudyRoomMember/${studyroomId}`);
+        window.location.reload();
+        // Navigate(`/StudyRoomMember/${studyroomId}`);
       })
       .catch((error) => {
         // 오류 처리
-        console.log(Error);
+        console.log(error);
         alert("해당유저를 스터디룸에서 차단하는것에 실패했습니다");
       });
   };
 
+<<<<<<< frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
+  const closeHostModalEvent = (userDto) => {
+    setIsHostModalOpen(false);
+    console.log("userDto",userDto);
+    axios
+      .put(`/api/studyrooms/${studyroomId}/pass`, userDto, {
+=======
   //방장권한변경
   const closeHostModalEvent = (event) => {
     setIsHostModalOpen(false);
@@ -89,13 +110,13 @@ const MemberTable = ({ studyroomId }) => {
 
     axios
       .put(`/api/studyrooms/${studyroomId}/pass`, setHost, {
+>>>>>>> frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
         headers: {
           Authorization: accessToken,
-          "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log("권한 ERROR:::", response.data);
         openHostSnackBar(); // Open the CustomSnackBar after closing the modal
         navigate(`/StudyRoomMember/${studyroomId}`);
       })
@@ -116,13 +137,21 @@ const MemberTable = ({ studyroomId }) => {
                 <TdWrap>{person.userDto.nickname}</TdWrap>
                 <TdWrap>{person.role}</TdWrap>
                 <TdWrap>
+<<<<<<< frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
+                  <ButtonWrap onClick={() => openHostModal(person)}>권한</ButtonWrap>
+=======
                   <ButtonWrap onClick={() => openHostModal(person.userDto.id)}>권한</ButtonWrap>
+>>>>>>> frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
                   <CustomModal isOpen={isHostModalOpen} closeModal={closeHostModal}>
                     <Box>
                       <Typography variant="h6" component="h2">
                         방장의 권한을 해당 유저에게 위임하겠습니까?
                       </Typography>
+<<<<<<< frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
+                      <Button onClick={() => closeHostModalEvent(modalStates)}>확인</Button>
+=======
                       <Button onClick={(event) => closeHostModalEvent(event)}>확인</Button>
+>>>>>>> frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
                       <Button onClick={() => setIsHostModalOpen(false)}>취소</Button>
                     </Box>
                   </CustomModal>
@@ -132,7 +161,11 @@ const MemberTable = ({ studyroomId }) => {
                     onClose={closeHostSnackBar}
                     message="방장이 변경되었습니다"
                   />
+<<<<<<< frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
+                  <ButtonWrap onClick={() => openModal(person)}>차단</ButtonWrap>
+=======
                   <ButtonWrap onClick={() => openModal(person.userDto.id)}>차단</ButtonWrap>
+>>>>>>> frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
                   <CustomModal isOpen={isModalOpen} closeModal={closeModal}>
                     <Box>
                       <Typography variant="h6" component="h2">
@@ -140,7 +173,11 @@ const MemberTable = ({ studyroomId }) => {
                         <br />
                         정말 차단하시겠습니까?
                       </Typography>
+<<<<<<< frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
+                      <Button onClick={() => closeModalEvent(modalStates)}>확인</Button>
+=======
                       <Button onClick={(event) => closeModalEvent(event)}>확인</Button>
+>>>>>>> frontend/sswm-front/src/components/StudyRoom/MemberTable.jsx
                       <Button onClick={() => setIsModalOpen(false)}>취소</Button>
                     </Box>
                   </CustomModal>
