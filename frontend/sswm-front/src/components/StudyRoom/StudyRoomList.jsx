@@ -32,7 +32,7 @@ const StudyRoomList = ({ option, searchKeyword, selectedTags, isPublic, sorting 
   // console.log(token);
   useEffect(() => {
     axios
-      .post("/api/studyrooms/list", data, {
+      .post(`/api/studyrooms/list`, data, {
         headers: {
           Authorization: token,
         },
@@ -52,7 +52,7 @@ const StudyRoomList = ({ option, searchKeyword, selectedTags, isPublic, sorting 
     <RoomListLayout ref={ref}>
       <RoomList>
         {studyrooms.map((studyroom) => (
-          <RecipeReviewCard key={studyroom.id} studyroom={studyroom} />
+          <RecipeReviewCard key={studyroom.id} studyroom={studyroom} isMyPage={false}/>
         ))}
       </RoomList>
     </RoomListLayout>

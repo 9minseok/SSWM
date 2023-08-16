@@ -103,7 +103,7 @@ const CreateStudyRoom = () => {
     setCheckedStudyroomName(studyroomDto.name);
 
     axios
-      .get("/api/studyrooms/exists", {
+      .get(`/api/studyrooms/exists`, {
         headers: {
           Authorization: accessToken,
         },
@@ -125,7 +125,8 @@ const CreateStudyRoom = () => {
       .catch((error) => {
         // 오류 처리
         console.log(error);
-        alert("스터디룸 이름 확인 중 오류가 발생했습니다.");
+        setIsExist(true);
+        alert("스터디룸 제목은 빈칸이 될 수 없습니다.");
       });
   };
 
@@ -217,7 +218,7 @@ const CreateStudyRoom = () => {
     // Axios 또는 Fetch API를 사용하여 formData를 서버로 전송
     // 예시로 Axios 사용
     axios
-      .post("/api/studyrooms", formData, {
+      .post(`/api/studyrooms`, formData, {
         headers: {
           Authorization: accessToken,
           "Content-Type": "multipart/form-data",
